@@ -73,7 +73,6 @@ public class Pontoon {
 
         int bet = 0;
         int curchips = 0;
-        int choice = 0;
         int i = 0;
 
         // Gameplay loop
@@ -92,18 +91,15 @@ public class Pontoon {
                             dealCards(players.get(i), 1);
                             System.out.println("Buy, new hand value: " + players.get(i).getScore());
                             System.out.println("\n");
-                            choice = 0;
                             break;
                         case "Stick":
                             System.out.println("Stick, new hand value: " + players.get(i).getScore());
                             System.out.println("\n");
-                            choice = 1;
                             break;
                         case "Twist":
                             dealCards(players.get(i), 1);
                             System.out.println("Twist, new hand value: " + players.get(i).getScore());
                             System.out.println("\n");
-                            choice = 2;
                             break;
                     }
                 }
