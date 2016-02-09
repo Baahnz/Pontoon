@@ -73,9 +73,11 @@ public class Pontoon {
 
         int bet = 0;
         int curchips = 0;
-        
+        int choice = 0;
+        int i = 0;
+
         // Gameplay loop
-        for (int i = 0; i < players.size(); i++) {
+        while (i < players.size()) {
             if (players.get(i).getScore() <= 21) {
                 System.out.println("Player " + (i) + " please make a selction: Twist, Buy or Stick");
                 String play = input.next();
@@ -89,42 +91,56 @@ public class Pontoon {
                             players.get(i).chips = curchips;
                             dealCards(players.get(i), 1);
                             System.out.println("Buy, new hand value: " + players.get(i).getScore());
+                            System.out.println("\n");
+                            choice = 0;
                             break;
                         case "Stick":
                             System.out.println("Stick, new hand value: " + players.get(i).getScore());
+                            System.out.println("\n");
+                            choice = 1;
                             break;
                         case "Twist":
                             dealCards(players.get(i), 1);
                             System.out.println("Twist, new hand value: " + players.get(i).getScore());
+                            System.out.println("\n");
+                            choice = 2;
                             break;
                     }
                 }
-            }
-                if (players.get(i).getScore() > 21) {
-                    System.out.println("Player " + (i) + " is bust");
-                }
-                if (dealer.getScore() <= 17) {
-                    dealCards(dealer, 1);
-                }
+
+                i++;
+            } // If round is over..
+            if (i == players.size()) {
+                dealCards(dealer, 1);
+                System.out.println("End of round");
+                System.out.println("Dealers score: " + dealer.getScore());
                 if (dealer.getScore() > 21) {
                     System.out.println("Dealer is bust");
                 }
-            
-            System.out.println("Player " + (i) + "'s hand value is: " + players.get(i).getScore() + " Chip total: " + players.get(i).getChips());
-            System.out.println("Dealers " + "hand value is: " + dealer.getScore());
-            System.out.println("\n");
+                for (int p = 0; p < players.size(); p++) {
+                    if (players.get(p).getScore() > 21 || dealer.getScore() > 21) {
 
-            if (players.get(i).getScore() > dealer.getScore() && players.get(i).getScore() <= 21 || players.get(i).getScore() > 0 && dealer.getScore() > 21) {
-                curchips += (bet * 2);
-                players.get(i).chips = curchips;
-                System.out.println("Player " + (i) + " beats the dealer!" + " Player " + (i) + " now has: " + players.get(i).getChips() + " chips");
-                System.out.println("\n");
-            } else if (players.get(i).getScore() < dealer.getScore() && dealer.getScore() <= 21 || players.get(i).getScore() > 21 && dealer.getScore() <= 21) {
-                System.out.println("Dealer wins!" + "Player " + (i) + " now has: " + players.get(i).getChips() + " chips");
-                System.out.println("\n");
+                        if (players.get(p).getScore() > 21) {
+                            System.out.println("Player " + (p) + " is bust");
+                        }
+
+                        for (int z = 0; z < players.size(); z++) {
+                            if (players.get(z).getScore() > dealer.getScore() && dealer.getScore() > 21)
+                            System.out.println("Player " + (z) + "'s hand value is: " + players.get(z).getScore() + " Chip total: " + players.get(z).chips + " you beat the dealer!");
+                        }
+                        for (int x = 0; x < players.size(); x++) {
+                            if (players.get(x).getScore() < dealer.getScore() && dealer.getScore() <= 21 || players.get(x).getScore() > 21 && dealer.getScore() <= 21) {
+                                System.out.println("Dealer wins!" + "Player " + (x) + " now has: " + players.get(x).getChips() + " chips");
+                            }
+                        }
+                    }
+                    i = 0;
+
+                }
+
             }
+
         }
 
     }
-
 }
