@@ -118,7 +118,7 @@ public class Pontoon {
                     System.out.println("Dealer is bust");
                 }
                 for (int p = 0; p < players.size(); p++) {
-                    if (players.get(p).getScore() > 21 || dealer.getScore() > 21) {
+                    if (players.get(p).getScore() >= 21 || dealer.getScore() >= 21) {
 
                         if (players.get(p).getScore() > 21) {
                             System.out.println("Player " + (p) + " is bust");
