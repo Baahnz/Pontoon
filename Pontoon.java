@@ -64,6 +64,12 @@ public class Pontoon {
 
         System.out.println(deck.size() + " Cards");
         System.out.println(players.size() + " Players");
+        
+        for(int i = 0; i < players.size(); i++){
+        System.out.println("Player "+(i)+"'s hand is worth: "+ players.get(i).getScore());
+        }
+        System.out.println("Dealer's hand is worth: " + dealer.getScore());
+        
     }
 
 }
