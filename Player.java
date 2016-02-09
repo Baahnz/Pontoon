@@ -7,10 +7,13 @@ import java.util.ArrayList;
  * @author dylcl_000
  */
 public class Player {
+    int chips = 20;
+    
+    int getChips() {       
+        return chips;
+    }
+    
 
-    /**
-     * Stores the cards that are dealt to players
-     */
     int getScore() {
         int score = 0;
         int aces = 0;
@@ -33,4 +36,8 @@ public class Player {
     }
 
     public ArrayList<Card> hand = new ArrayList<>();
+
+//    int chips() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }

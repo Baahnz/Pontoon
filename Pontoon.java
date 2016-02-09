@@ -34,7 +34,7 @@ public class Pontoon {
 
     /**
      * @param args the command line arguments. Not expecting any, thus any cmd
-     *             input is not handled arguments
+     * input is not handled arguments
      */
     public static void main(String[] args) {
 
@@ -45,7 +45,7 @@ public class Pontoon {
             deck.add(new Card(i));
             deck.add(new Card(i));
         }
-        // Shuffle cards randomly
+        // Shuffle cards randomly and deal cards to all players
         Collections.shuffle(deck);
 
         Scanner input = new Scanner(System.in, "ascii");
@@ -64,12 +64,67 @@ public class Pontoon {
 
         System.out.println(deck.size() + " Cards");
         System.out.println(players.size() + " Players");
-        
-        for(int i = 0; i < players.size(); i++){
-        System.out.println("Player "+(i)+"'s hand is worth: "+ players.get(i).getScore());
+
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println("Player " + (i) + "'s hand is worth: " + players.get(i).getScore() + " Chip total: " + players.get(i).getChips());
         }
         System.out.println("Dealer's hand is worth: " + dealer.getScore());
+        System.out.println("\n");
+
+        int bet = 0;
+        int curchips = 0;
         
+        // Gameplay loop
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getScore() <= 21) {
+                System.out.println("Player " + (i) + " please make a selction: Twist, Buy or Stick");
+                String play = input.next();
+                if (null != play) {
+                    switch (play) {
+                        case "Buy":
+                            System.out.println("How much would you like to increase your bet by?");
+                            bet = input.nextInt();
+                            curchips = players.get(i).getChips();
+                            curchips -= bet;
+                            players.get(i).chips = curchips;
+                            dealCards(players.get(i), 1);
+                            System.out.println("Buy, new hand value: " + players.get(i).getScore());
+                            break;
+                        case "Stick":
+                            System.out.println("Stick, new hand value: " + players.get(i).getScore());
+                            break;
+                        case "Twist":
+                            dealCards(players.get(i), 1);
+                            System.out.println("Twist, new hand value: " + players.get(i).getScore());
+                            break;
+                    }
+                }
+            }
+                if (players.get(i).getScore() > 21) {
+                    System.out.println("Player " + (i) + " is bust");
+                }
+                if (dealer.getScore() <= 17) {
+                    dealCards(dealer, 1);
+                }
+                if (dealer.getScore() > 21) {
+                    System.out.println("Dealer is bust");
+                }
+            
+            System.out.println("Player " + (i) + "'s hand value is: " + players.get(i).getScore() + " Chip total: " + players.get(i).getChips());
+            System.out.println("Dealers " + "hand value is: " + dealer.getScore());
+            System.out.println("\n");
+
+            if (players.get(i).getScore() > dealer.getScore() && players.get(i).getScore() <= 21 || players.get(i).getScore() > 0 && dealer.getScore() > 21) {
+                curchips += (bet * 2);
+                players.get(i).chips = curchips;
+                System.out.println("Player " + (i) + " beats the dealer!" + " Player " + (i) + " now has: " + players.get(i).getChips() + " chips");
+                System.out.println("\n");
+            } else if (players.get(i).getScore() < dealer.getScore() && dealer.getScore() <= 21 || players.get(i).getScore() > 21 && dealer.getScore() <= 21) {
+                System.out.println("Dealer wins!" + "Player " + (i) + " now has: " + players.get(i).getChips() + " chips");
+                System.out.println("\n");
+            }
+        }
+
     }
 
 }
